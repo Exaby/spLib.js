@@ -106,14 +106,14 @@ function getThumbnailFromVideo (videoPath, homePath) {
     ffmpeg.setFfmpegPath(path.join(homePath, 'ffmpeg.exe'));
     
     const thumbnailFolder = path.join(homePath, 'thumbnails');
-    const thumbnailPath = path.join(homePath, path.basename(videoPath, path.extname(videoPath)) + '.jpg');
+    const thumbnailPath = path.join(thumbnailFolder, path.basename(videoPath, path.extname(videoPath)) + '.jpg');
 
-    if (!fs.existsSync(thumbnailFolder)) {
-        fs.mkdirSync(thumbnailFolder);
+    if (!fs.existsSync(thumbnailFolder.catch(err => console.log(err)))) {
+        fs.mkdirSync(thumbnailFolder).catch(err => console.log(err));
     }
-    
-    if (fs.existsSync(thumbnailPath)) {
-        return thumbnailPath;
+
+    if (fs.existsSync(thumbnailPath).catch(err => console.log(err))) {
+        console.log('thumbnail for '+path.basename(videoPath)+' already exists');
     } else {
         // create thumbnail
         ffmpeg(videoPath)
@@ -122,11 +122,12 @@ function getThumbnailFromVideo (videoPath, homePath) {
             }
             )
             .on('end', function() {
-                console.log('Thumbnail for ' +path.basename(videoPath, path.extname(videoPath))+ '.jpg created');
+                console.log('Thumbnail for '+path.basename(videoPath)+' created');
                 return thumbnailPath;
             }
             )
             .on('error', function(err) {
+                console.log('Could not make thumbnail for ' + path.basename(videoPath));
                 console.error(err);
             }
             )
@@ -140,4 +141,4 @@ function getThumbnailFromVideo (videoPath, homePath) {
     
 }
 
-module.exports = { getThumbnailFromVideo };
+module.exports = { getThumbnailFromVideo: getThumbnailFromVideo };
