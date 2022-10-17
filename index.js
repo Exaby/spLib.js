@@ -108,11 +108,11 @@ function getThumbnailFromVideo (videoPath, homePath) {
     const thumbnailFolder = path.join(homePath, 'thumbnails');
     const thumbnailPath = path.join(thumbnailFolder, path.basename(videoPath, path.extname(videoPath)) + '.jpg');
 
-    if (!fs.existsSync(thumbnailFolder.catch(err => console.log(err)))) {
+    if (!fs.existsSync(thumbnailFolder)) {
         fs.mkdirSync(thumbnailFolder).catch(err => console.log(err));
     }
 
-    if (fs.existsSync(thumbnailPath).catch(err => console.log(err))) {
+    if (fs.existsSync(thumbnailPath)) {
         console.log('thumbnail for '+path.basename(videoPath)+' already exists');
     } else {
         // create thumbnail
