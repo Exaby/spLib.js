@@ -97,7 +97,6 @@ function toBinary(num) {
   module.exports = { httpGet: httpGet, httpPost: httpPost };
  
 // ffmpeg
-
 function getThumbnailFromVideo (videoPath, homePath) {
     const fs = require('fs');
     const path = require('path');
@@ -136,7 +135,7 @@ function getThumbnailFromVideo (videoPath, homePath) {
                 timestamps: ['0%'],
                 folder: thumbnailFolder,
                 filename: path.basename(videoPath, path.extname(videoPath)) + '.jpg',
-                size: '640x480'
+                size: '640x?'
             });
     }
     
