@@ -133,9 +133,10 @@ function getThumbnailFromVideo (videoPath, homePath) {
             )
             .screenshots({
                 count: 1,
+                timestamps: ['0%'],
                 folder: thumbnailFolder,
                 filename: path.basename(videoPath, path.extname(videoPath)) + '.jpg',
-                size: '320x240'
+                size: '640x480'
             });
     }
     
